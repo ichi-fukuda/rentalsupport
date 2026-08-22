@@ -10,7 +10,7 @@ export function EditVehicleForm({ vehicle }: { vehicle: Vehicle }) {
   const [state, action, pending] = useActionState(updateVehicleAction, initialState);
 
   return (
-    <form action={action} className="flex flex-col gap-4 rounded-xl border border-black/10 bg-white p-5 dark:border-white/10 dark:bg-zinc-900">
+    <form action={action} className="flex flex-col gap-4 card">
       <input type="hidden" name="id" value={vehicle.id} />
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="flex flex-col gap-1.5">
@@ -22,7 +22,7 @@ export function EditVehicleForm({ vehicle }: { vehicle: Vehicle }) {
             name="name"
             required
             defaultValue={vehicle.name}
-            className="rounded-lg border border-black/15 bg-white px-3 py-2 text-sm dark:border-white/15 dark:bg-zinc-950"
+            className="field-input"
           />
         </div>
         <div className="flex flex-col gap-1.5">
@@ -33,7 +33,7 @@ export function EditVehicleForm({ vehicle }: { vehicle: Vehicle }) {
             id="category"
             name="category"
             defaultValue={vehicle.category}
-            className="rounded-lg border border-black/15 bg-white px-3 py-2 text-sm dark:border-white/15 dark:bg-zinc-950"
+            className="field-input"
           />
         </div>
         <div className="flex flex-col gap-1.5">
@@ -45,7 +45,7 @@ export function EditVehicleForm({ vehicle }: { vehicle: Vehicle }) {
             name="year"
             type="number"
             defaultValue={vehicle.year}
-            className="rounded-lg border border-black/15 bg-white px-3 py-2 text-sm dark:border-white/15 dark:bg-zinc-950"
+            className="field-input"
           />
         </div>
         <div className="flex flex-col gap-1.5">
@@ -56,7 +56,7 @@ export function EditVehicleForm({ vehicle }: { vehicle: Vehicle }) {
             id="fuelType"
             name="fuelType"
             defaultValue={vehicle.fuelType}
-            className="rounded-lg border border-black/15 bg-white px-3 py-2 text-sm dark:border-white/15 dark:bg-zinc-950"
+            className="field-input"
           >
             <option value="gasoline">ガソリン</option>
             <option value="hybrid">ハイブリッド</option>
@@ -74,7 +74,7 @@ export function EditVehicleForm({ vehicle }: { vehicle: Vehicle }) {
           name="controlsJa"
           rows={5}
           defaultValue={vehicle.controlsJa}
-          className="rounded-lg border border-black/15 bg-white px-3 py-2 text-sm dark:border-white/15 dark:bg-zinc-950"
+          className="field-input"
         />
       </div>
 
@@ -87,12 +87,12 @@ export function EditVehicleForm({ vehicle }: { vehicle: Vehicle }) {
           name="fuelGuideJa"
           rows={3}
           defaultValue={vehicle.fuelGuideJa}
-          className="rounded-lg border border-black/15 bg-white px-3 py-2 text-sm dark:border-white/15 dark:bg-zinc-950"
+          className="field-input"
         />
       </div>
 
       {state.error && (
-        <p className="rounded-lg bg-red-50 p-3 text-sm text-red-700 dark:bg-red-950 dark:text-red-300">
+        <p className="error-box">
           {state.error}
         </p>
       )}
@@ -100,7 +100,7 @@ export function EditVehicleForm({ vehicle }: { vehicle: Vehicle }) {
       <button
         type="submit"
         disabled={pending}
-        className="self-start rounded-full bg-foreground px-5 py-2 text-sm font-medium text-background transition-colors hover:bg-[#383838] disabled:opacity-50 dark:hover:bg-[#ccc]"
+        className="btn btn-primary self-start"
       >
         {pending ? "保存中…" : "保存"}
       </button>

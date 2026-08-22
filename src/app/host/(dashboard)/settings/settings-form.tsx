@@ -21,7 +21,7 @@ export function SettingsForm({ host }: { host: Host }) {
           rows={8}
           defaultValue={host.agreementText}
           placeholder="例：貸出期間中の事故・違反は借主の責任となります。..."
-          className="rounded-lg border border-black/15 bg-white p-3 text-sm dark:border-white/15 dark:bg-zinc-900"
+          className="field-input"
         />
       </div>
 
@@ -54,7 +54,7 @@ export function SettingsForm({ host }: { host: Host }) {
           rows={5}
           defaultValue={host.accidentNotes}
           placeholder="例：事故発生時は当店緊急ダイヤル 00-0000-0000 にも必ず連絡するよう伝えてください。"
-          className="rounded-lg border border-black/15 bg-white p-3 text-sm dark:border-white/15 dark:bg-zinc-900"
+          className="field-input"
         />
       </div>
 
@@ -62,7 +62,7 @@ export function SettingsForm({ host }: { host: Host }) {
         <button
           type="submit"
           disabled={pending}
-          className="self-start rounded-full bg-foreground px-5 py-2 text-sm font-medium text-background transition-colors hover:bg-[#383838] disabled:opacity-50 dark:hover:bg-[#ccc]"
+          className="btn btn-primary self-start"
         >
           {pending ? "保存中…" : "保存"}
         </button>

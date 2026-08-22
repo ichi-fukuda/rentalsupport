@@ -8,7 +8,7 @@ export default async function HostSettingsPage() {
     <div className="flex flex-col gap-6">
       <div>
         <h2 className="text-xl font-bold">ステップ設定</h2>
-        <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+        <p className="mt-1 text-sm text-muted">
           店頭での貸出フローに必要なステップをカスタマイズできます。
         </p>
       </div>

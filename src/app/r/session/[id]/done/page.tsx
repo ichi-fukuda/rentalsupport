@@ -19,7 +19,7 @@ export default async function DonePage({
         ✓
       </div>
       <h1 className="text-2xl font-bold">{t(lang, "storeDoneTitle")}</h1>
-      <p className="text-zinc-600 dark:text-zinc-400">{t(lang, "storeDoneMessage")}</p>
+      <p className="text-muted">{t(lang, "storeDoneMessage")}</p>
     </div>
   );
 }

@@ -45,34 +45,34 @@ export default function AccidentPage() {
     <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-6 px-6 py-12">
       <div>
         <h1 className="text-2xl font-bold">{t("accidentPageTitle")}</h1>
-        <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
+        <p className="mt-2 text-sm text-muted">
           {t("accidentPageDesc")}
         </p>
       </div>
 
-      <div className="flex flex-1 flex-col gap-3 rounded-xl border border-black/10 bg-white p-4 dark:border-white/10 dark:bg-zinc-900">
+      <div className="flex flex-1 flex-col gap-3 card">
         {messages.length === 0 && (
-          <p className="text-sm text-zinc-400">—</p>
+          <p className="text-sm text-muted">—</p>
         )}
         {messages.map((m, i) => (
           <div
             key={i}
             className={
               m.role === "user"
-                ? "self-end rounded-2xl rounded-br-sm bg-foreground px-4 py-2 text-sm text-background"
-                : "self-start whitespace-pre-wrap rounded-2xl rounded-bl-sm bg-zinc-100 px-4 py-2 text-sm dark:bg-zinc-800"
+                ? "self-end rounded-2xl rounded-br-sm bg-brand px-4 py-2 text-sm text-white"
+                : "self-start whitespace-pre-wrap rounded-2xl rounded-bl-sm bg-surface-hover px-4 py-2 text-sm text-foreground"
             }
           >
             {m.content}
           </div>
         ))}
         {loading && (
-          <p className="text-sm text-zinc-400">{t("accidentThinking")}</p>
+          <p className="text-sm text-muted">{t("accidentThinking")}</p>
         )}
       </div>
 
       {error && (
-        <p className="rounded-lg bg-red-50 p-3 text-sm text-red-700 dark:bg-red-950 dark:text-red-300">
+        <p className="error-box">
           {error}
         </p>
       )}
@@ -82,12 +82,12 @@ export default function AccidentPage() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder={t("accidentInputPlaceholder")}
-          className="flex-1 rounded-full border border-black/15 bg-white px-4 py-2 text-sm dark:border-white/15 dark:bg-zinc-900"
+          className="field-input flex-1"
         />
         <button
           type="submit"
           disabled={loading || !input.trim()}
-          className="rounded-full bg-foreground px-5 py-2 text-sm font-medium text-background transition-colors hover:bg-[#383838] disabled:opacity-50 dark:hover:bg-[#ccc]"
+          className="btn btn-primary"
         >
           {t("accidentSend")}
         </button>

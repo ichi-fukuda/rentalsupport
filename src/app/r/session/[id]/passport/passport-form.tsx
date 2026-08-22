@@ -1,29 +1,22 @@
 "use client";
 
 import { useActionState } from "react";
-import { submitReturnPhotosAction, type FormState } from "./actions";
+import { submitPassportAction, type FormState } from "./actions";
 import { t, type LangCode } from "@/lib/i18n";
 
 const initialState: FormState = {};
 
-export function ReturnPhotosForm({
-  sessionId,
-  lang,
-}: {
-  sessionId: string;
-  lang: LangCode;
-}) {
-  const [state, action, pending] = useActionState(submitReturnPhotosAction, initialState);
+export function PassportForm({ sessionId, lang }: { sessionId: string; lang: LangCode }) {
+  const [state, action, pending] = useActionState(submitPassportAction, initialState);
 
   return (
     <form action={action} className="flex flex-col gap-4">
       <input type="hidden" name="sessionId" value={sessionId} />
       <input
         type="file"
-        name="files"
+        name="file"
         accept="image/*"
         capture="environment"
-        multiple
         required
         className="text-sm"
       />

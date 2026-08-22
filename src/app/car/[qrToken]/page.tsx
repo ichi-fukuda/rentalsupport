@@ -31,7 +31,7 @@ export default async function CarPage({
     <div className="mx-auto flex w-full max-w-lg flex-1 flex-col gap-6 px-6 py-12">
       <div>
         <h1 className="text-2xl font-bold">{vehicle.name}</h1>
-        <p className="text-sm text-zinc-600 dark:text-zinc-400">{vehicle.category}</p>
+        <p className="text-sm text-muted">{vehicle.category}</p>
       </div>
 
       <ExplainSection
@@ -61,7 +61,7 @@ export default async function CarPage({
       {activeSession && (
         <Link
           href={`/r/session/${activeSession.id}/return/fuel`}
-          className="self-start rounded-full border border-black/15 px-5 py-2 text-sm font-medium hover:bg-black/5 dark:border-white/15 dark:hover:bg-white/10"
+          className="btn btn-outline self-start"
         >
           {t(lang, "carReturnButton")}
         </Link>

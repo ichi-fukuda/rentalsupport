@@ -10,11 +10,11 @@ export default async function SignupCompletePage({
   return (
     <div className="mx-auto flex w-full max-w-lg flex-1 flex-col gap-6 px-6 py-12">
       <h1 className="text-2xl font-bold">お申込みありがとうございます</h1>
-      <div className="flex flex-col gap-2 rounded-xl border border-black/10 bg-white p-5 text-sm dark:border-white/10 dark:bg-zinc-900">
+      <div className="flex flex-col gap-2 card text-sm">
         <p>
           {shop && <>「{shop}」様のアカウントを作成しました。</>}
         </p>
-        <p className="text-zinc-600 dark:text-zinc-400">
+        <p className="text-muted">
           本来はここでログイン用URLをメールでお送りしますが、このプロトタイプでは省略しています。
           以下のログイン画面から、登録したメールアドレスとパスワードでログインしてください。
         </p>
@@ -26,7 +26,7 @@ export default async function SignupCompletePage({
       </div>
       <Link
         href="/host/login"
-        className="self-start rounded-full bg-foreground px-6 py-2 text-sm font-medium text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc]"
+        className="btn btn-primary self-start"
       >
         ログイン画面へ
       </Link>

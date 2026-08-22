@@ -15,9 +15,9 @@ export default async function HostDashboardLayout({
 
   return (
     <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-6 px-6 py-10">
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-black/10 pb-4 dark:border-white/10">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border pb-4">
         <div>
-          <p className="text-xs text-zinc-500">ホスト管理画面</p>
+          <p className="text-xs text-muted">ホスト管理画面</p>
           <h1 className="text-xl font-bold">{host.shopName}</h1>
         </div>
         <nav className="flex flex-wrap items-center gap-4 text-sm">
@@ -26,6 +26,9 @@ export default async function HostDashboardLayout({
           </Link>
           <Link href="/host/vehicles" className="hover:underline">
             車両管理
+          </Link>
+          <Link href="/host/customers" className="hover:underline">
+            利用客管理
           </Link>
           <Link href="/host/manual" className="hover:underline">
             マニュアル
@@ -43,7 +46,7 @@ export default async function HostDashboardLayout({
             貸出履歴
           </Link>
           <form action={logoutAction}>
-            <button type="submit" className="text-zinc-500 hover:underline">
+            <button type="submit" className="text-muted hover:underline">
               ログアウト
             </button>
           </form>

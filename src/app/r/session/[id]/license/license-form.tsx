@@ -22,14 +22,14 @@ export function LicenseForm({ sessionId, lang }: { sessionId: string; lang: Lang
         className="text-sm"
       />
       {state.error && (
-        <p className="rounded-lg bg-red-50 p-3 text-sm text-red-700 dark:bg-red-950 dark:text-red-300">
+        <p className="error-box">
           {state.error}
         </p>
       )}
       <button
         type="submit"
         disabled={pending}
-        className="self-start rounded-full bg-foreground px-6 py-2 text-sm font-medium text-background transition-colors hover:bg-[#383838] disabled:opacity-50 dark:hover:bg-[#ccc]"
+        className="btn btn-primary self-start"
       >
         {pending ? t(lang, "storeUploading") : t(lang, "storeContinueButton")}
       </button>

@@ -14,7 +14,7 @@ export default async function HostVehiclesPage() {
     <div className="flex flex-col gap-6">
       <div>
         <h2 className="text-xl font-bold">車両管理</h2>
-        <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+        <p className="mt-1 text-sm text-muted">
           {vehicles.length} / {host.contractedVehicles} 台（契約台数）
         </p>
       </div>
@@ -25,10 +25,10 @@ export default async function HostVehiclesPage() {
             <Link
               key={v.id}
               href={`/host/vehicles/${v.id}`}
-              className="flex flex-col gap-1 rounded-xl border border-black/10 bg-white p-5 transition-colors hover:border-black/30 dark:border-white/10 dark:bg-zinc-900 dark:hover:border-white/30"
+              className="flex flex-col gap-1 card-hover"
             >
               <span className="font-semibold">{v.name}</span>
-              <span className="text-sm text-zinc-500">
+              <span className="text-sm text-muted">
                 {v.category} ・ {v.year}年
               </span>
             </Link>

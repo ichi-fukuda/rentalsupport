@@ -17,13 +17,13 @@ export default async function HostAccidentsPage() {
     <div className="flex flex-col gap-6">
       <div>
         <h2 className="text-xl font-bold">事故レポート</h2>
-        <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+        <p className="mt-1 text-sm text-muted">
           AIが利用者からヒアリングした内容の構造化レポートです。内容を確認し、必要に応じて保険会社へ連絡・転送してください。
         </p>
       </div>
 
       {reports.length === 0 && (
-        <p className="text-sm text-zinc-400">事故レポートはまだありません。</p>
+        <p className="text-sm text-muted">事故レポートはまだありません。</p>
       )}
 
       <div className="flex flex-col gap-4">
@@ -37,12 +37,12 @@ export default async function HostAccidentsPage() {
           return (
             <div
               key={r.id}
-              className="flex flex-col gap-3 rounded-xl border border-black/10 bg-white p-5 dark:border-white/10 dark:bg-zinc-900"
+              className="flex flex-col gap-3 card"
             >
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div>
                   <span className="font-semibold">{r.vehicle.name}</span>
-                  <span className="ml-2 text-xs text-zinc-500">
+                  <span className="ml-2 text-xs text-muted">
                     {r.createdAt.toLocaleString("ja-JP")} ・{" "}
                     {isLangCode(r.lang) ? languageLabel(r.lang) : r.lang}
                   </span>
@@ -50,20 +50,20 @@ export default async function HostAccidentsPage() {
                 <span
                   className={
                     r.status === "NEW"
-                      ? "rounded-full bg-red-100 px-3 py-1 text-xs font-medium text-red-700 dark:bg-red-950 dark:text-red-300"
-                      : "rounded-full bg-zinc-100 px-3 py-1 text-xs font-medium text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400"
+                      ? "chip bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300"
+                      : "chip bg-surface-hover text-muted"
                   }
                 >
                   {r.status === "NEW" ? "未確認" : "確認済み"}
                 </span>
               </div>
 
-              <div className="whitespace-pre-wrap rounded-lg bg-zinc-50 p-3 text-sm dark:bg-zinc-950">
+              <div className="whitespace-pre-wrap rounded-lg bg-surface-hover p-3 text-sm">
                 {r.summary}
               </div>
 
               <details className="text-sm">
-                <summary className="cursor-pointer text-zinc-500">
+                <summary className="cursor-pointer text-muted">
                   ヒアリングのやり取りを見る（{transcript.length}件）
                 </summary>
                 <div className="mt-2 flex flex-col gap-2">
@@ -83,7 +83,7 @@ export default async function HostAccidentsPage() {
                   <input type="hidden" name="id" value={r.id} />
                   <button
                     type="submit"
-                    className="rounded-full border border-black/15 px-4 py-1.5 text-xs font-medium hover:bg-black/5 dark:border-white/15 dark:hover:bg-white/10"
+                    className="btn btn-outline btn-sm"
                   >
                     確認済みにする
                   </button>

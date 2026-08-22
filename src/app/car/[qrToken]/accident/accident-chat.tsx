@@ -70,25 +70,25 @@ export function AccidentChat({
 
   return (
     <div className="flex flex-1 flex-col gap-4">
-      <div className="flex flex-1 flex-col gap-3 rounded-xl border border-black/10 bg-white p-4 dark:border-white/10 dark:bg-zinc-900">
-        {messages.length === 0 && <p className="text-sm text-zinc-400">—</p>}
+      <div className="flex flex-1 flex-col gap-3 card">
+        {messages.length === 0 && <p className="text-sm text-muted">—</p>}
         {messages.map((m, i) => (
           <div
             key={i}
             className={
               m.role === "user"
-                ? "self-end rounded-2xl rounded-br-sm bg-foreground px-4 py-2 text-sm text-background"
-                : "self-start whitespace-pre-wrap rounded-2xl rounded-bl-sm bg-zinc-100 px-4 py-2 text-sm dark:bg-zinc-800"
+                ? "self-end rounded-2xl rounded-br-sm bg-brand px-4 py-2 text-sm text-white"
+                : "self-start whitespace-pre-wrap rounded-2xl rounded-bl-sm bg-surface-hover px-4 py-2 text-sm text-foreground"
             }
           >
             {m.content}
           </div>
         ))}
-        {loading && <p className="text-sm text-zinc-400">{t(lang, "accidentThinking")}</p>}
+        {loading && <p className="text-sm text-muted">{t(lang, "accidentThinking")}</p>}
       </div>
 
       {error && (
-        <p className="rounded-lg bg-red-50 p-3 text-sm text-red-700 dark:bg-red-950 dark:text-red-300">
+        <p className="error-box">
           {error}
         </p>
       )}
@@ -98,12 +98,12 @@ export function AccidentChat({
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder={t(lang, "accidentInputPlaceholder")}
-          className="flex-1 rounded-full border border-black/15 bg-white px-4 py-2 text-sm dark:border-white/15 dark:bg-zinc-900"
+          className="field-input flex-1"
         />
         <button
           type="submit"
           disabled={loading || !input.trim()}
-          className="rounded-full bg-foreground px-5 py-2 text-sm font-medium text-background transition-colors hover:bg-[#383838] disabled:opacity-50 dark:hover:bg-[#ccc]"
+          className="btn btn-primary"
         >
           {t(lang, "accidentSend")}
         </button>
@@ -113,7 +113,7 @@ export function AccidentChat({
         <button
           onClick={handleSendReport}
           disabled={reportLoading || reportSent}
-          className="self-start rounded-full border border-black/15 px-5 py-2 text-sm font-medium hover:bg-black/5 disabled:opacity-50 dark:border-white/15 dark:hover:bg-white/10"
+          className="btn btn-outline self-start"
         >
           {reportSent
             ? t(lang, "shareReportSent")

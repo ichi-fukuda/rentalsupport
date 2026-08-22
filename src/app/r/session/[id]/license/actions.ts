@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { saveUploadedImage } from "@/lib/uploads";
 import { nextStepPath } from "@/lib/rental-flow";
+import { getNationality } from "@/lib/nationality";
 
 export type FormState = { error?: string };
 
@@ -14,7 +15,7 @@ export async function submitLicenseAction(
   const sessionId = String(formData.get("sessionId") ?? "");
   const session = await db.rentalSession.findUnique({
     where: { id: sessionId },
-    include: { host: true },
+    include: { host: true, customer: true },
   });
   if (!session) return { error: "Session not found." };
 
@@ -26,7 +27,8 @@ export async function submitLicenseAction(
   }
   if (!photoPath) return { error: "Please choose a photo." };
 
-  const path = nextStepPath(session.host, sessionId, "LICENSE_SUBMITTED");
+  const requiresPassport = getNationality(session.customer.nationality).requiresPassport;
+  const path = nextStepPath(session.host, sessionId, "LICENSE_SUBMITTED", requiresPassport);
   const status = path.endsWith("/done") ? "READY_FOR_KEY" : "LICENSE_SUBMITTED";
   await db.rentalSession.update({
     where: { id: sessionId },

@@ -8,7 +8,7 @@ import { getNationality } from "@/lib/nationality";
 
 export type FormState = { error?: string };
 
-export async function submitDamageAction(
+export async function submitPassportAction(
   _prevState: FormState,
   formData: FormData,
 ): Promise<FormState> {
@@ -19,23 +19,20 @@ export async function submitDamageAction(
   });
   if (!session) return { error: "Session not found." };
 
-  const files = formData.getAll("files");
-  const paths: string[] = [];
+  let photoPath: string | null;
   try {
-    for (const file of files) {
-      const p = await saveUploadedImage(file, session.hostId, session.id);
-      if (p) paths.push(p);
-    }
+    photoPath = await saveUploadedImage(formData.get("file"), session.hostId, session.id);
   } catch (err) {
     return { error: (err as Error).message };
   }
+  if (!photoPath) return { error: "Please choose a photo." };
 
   const requiresPassport = getNationality(session.customer.nationality).requiresPassport;
-  const path = nextStepPath(session.host, sessionId, "DAMAGE_CHECKED", requiresPassport);
-  const status = path.endsWith("/done") ? "READY_FOR_KEY" : "DAMAGE_CHECKED";
+  const path = nextStepPath(session.host, sessionId, "PASSPORT_SUBMITTED", requiresPassport);
+  const status = path.endsWith("/done") ? "READY_FOR_KEY" : "PASSPORT_SUBMITTED";
   await db.rentalSession.update({
     where: { id: sessionId },
-    data: { status, damagePhotoPaths: paths.join(",") },
+    data: { status, passportPhotoPath: photoPath },
   });
   redirect(path);
 }

@@ -19,7 +19,7 @@ export default async function ReturnDonePage({
         ✓
       </div>
       <h1 className="text-2xl font-bold">{t(lang, "returnDoneTitle")}</h1>
-      <p className="text-zinc-600 dark:text-zinc-400">{t(lang, "returnDoneMessage")}</p>
+      <p className="text-muted">{t(lang, "returnDoneMessage")}</p>
     </div>
   );
 }

@@ -11,7 +11,7 @@ export default function VehiclesPage() {
     <div className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-6 px-6 py-12">
       <div>
         <h1 className="text-2xl font-bold">{t("vehiclesPageTitle")}</h1>
-        <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
+        <p className="mt-2 text-sm text-muted">
           {t("vehiclesPageDesc")}
         </p>
       </div>
@@ -20,10 +20,10 @@ export default function VehiclesPage() {
           <Link
             key={v.id}
             href={`/vehicles/${v.id}`}
-            className="flex flex-col gap-1 rounded-xl border border-black/10 bg-white p-5 transition-colors hover:border-black/30 dark:border-white/10 dark:bg-zinc-900 dark:hover:border-white/30"
+            className="flex flex-col gap-1 card-hover"
           >
             <span className="text-lg font-semibold">{v.name}</span>
-            <span className="text-sm text-zinc-600 dark:text-zinc-400">
+            <span className="text-sm text-muted">
               {v.category}
             </span>
           </Link>

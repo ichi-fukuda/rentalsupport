@@ -45,17 +45,17 @@ function ExplainSection({
   }
 
   return (
-    <div className="flex flex-col gap-3 rounded-xl border border-black/10 bg-white p-5 dark:border-white/10 dark:bg-zinc-900">
+    <div className="flex flex-col gap-3 card">
       <h2 className="text-lg font-semibold">{heading}</h2>
       <button
         onClick={handleClick}
         disabled={loading}
-        className="self-start rounded-full bg-foreground px-5 py-2 text-sm font-medium text-background transition-colors hover:bg-[#383838] disabled:opacity-50 dark:hover:bg-[#ccc]"
+        className="btn btn-primary self-start"
       >
         {loading ? t("manualLoading") : buttonLabel}
       </button>
       {error && (
-        <p className="rounded-lg bg-red-50 p-3 text-sm text-red-700 dark:bg-red-950 dark:text-red-300">
+        <p className="error-box">
           {error}
         </p>
       )}
@@ -84,7 +84,7 @@ export default function VehicleDetailPage() {
           ← {t("vehicleBack")}
         </Link>
         <h1 className="mt-2 text-2xl font-bold">{vehicle.name}</h1>
-        <p className="text-sm text-zinc-600 dark:text-zinc-400">
+        <p className="text-sm text-muted">
           {vehicle.category}
         </p>
       </div>

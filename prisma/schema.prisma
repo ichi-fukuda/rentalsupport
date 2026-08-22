@@ -28,8 +28,25 @@ model Host {
   createdAt           DateTime @default(now())
 
   vehicles        Vehicle[]
+  customers       Customer[]
   rentalSessions  RentalSession[]
   accidentReports AccidentReport[]
+}
+
+/// ホストが事前登録する利用客
+model Customer {
+  id          String   @id @default(cuid())
+  hostId      String
+  email       String
+  name        String
+  /// 国コード（"CN","KR","US","VN","BR","PH","NP","TW","OTHER" など）
+  nationality String
+  createdAt   DateTime @default(now())
+
+  host           Host            @relation(fields: [hostId], references: [id], onDelete: Cascade)
+  rentalSessions RentalSession[]
+
+  @@unique([hostId, email])
 }
 
 /// ホストが保有する車両
@@ -56,9 +73,11 @@ model RentalSession {
   id                String    @id @default(cuid())
   hostId            String
   vehicleId         String
-  /// STARTED -> AGREED -> LICENSE_SUBMITTED -> DAMAGE_CHECKED -> READY_FOR_KEY -> IN_PROGRESS -> RETURN_SUBMITTED -> COMPLETED
+  customerId        String
+  /// STARTED -> AGREED -> PASSPORT_SUBMITTED -> LICENSE_SUBMITTED -> DAMAGE_CHECKED -> READY_FOR_KEY -> IN_PROGRESS -> RETURN_SUBMITTED -> COMPLETED
   status            String    @default("STARTED")
   lang              String    @default("ja")
+  passportPhotoPath String?
   licensePhotoPath  String?
   damagePhotoPaths  String    @default("")
   returnPhotoPaths  String    @default("")
@@ -68,6 +87,7 @@ model RentalSession {
 
   host            Host             @relation(fields: [hostId], references: [id], onDelete: Cascade)
   vehicle         Vehicle          @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
+  customer        Customer         @relation(fields: [customerId], references: [id], onDelete: Cascade)
   accidentReports AccidentReport[]
 }
 

@@ -23,7 +23,7 @@ export default function HostLoginPage() {
             name="email"
             type="email"
             required
-            className="rounded-lg border border-black/15 bg-white px-3 py-2 text-sm dark:border-white/15 dark:bg-zinc-900"
+            className="field-input"
           />
         </div>
         <div className="flex flex-col gap-1.5">
@@ -35,12 +35,12 @@ export default function HostLoginPage() {
             name="password"
             type="password"
             required
-            className="rounded-lg border border-black/15 bg-white px-3 py-2 text-sm dark:border-white/15 dark:bg-zinc-900"
+            className="field-input"
           />
         </div>
 
         {state.error && (
-          <p className="rounded-lg bg-red-50 p-3 text-sm text-red-700 dark:bg-red-950 dark:text-red-300">
+          <p className="error-box">
             {state.error}
           </p>
         )}
@@ -48,13 +48,13 @@ export default function HostLoginPage() {
         <button
           type="submit"
           disabled={pending}
-          className="self-start rounded-full bg-foreground px-6 py-2 text-sm font-medium text-background transition-colors hover:bg-[#383838] disabled:opacity-50 dark:hover:bg-[#ccc]"
+          className="btn btn-primary self-start"
         >
           {pending ? "ログイン中…" : "ログイン"}
         </button>
       </form>
 
-      <p className="text-sm text-zinc-500">
+      <p className="text-sm text-muted">
         アカウントをお持ちでない方は{" "}
         <Link href="/host/signup" className="underline">
           新規申込み

@@ -6,9 +6,9 @@ function StatCard({ label, value, href }: { label: string; value: number | strin
   return (
     <Link
       href={href}
-      className="flex flex-col gap-1 rounded-xl border border-black/10 bg-white p-5 transition-colors hover:border-black/30 dark:border-white/10 dark:bg-zinc-900 dark:hover:border-white/30"
+      className="flex flex-col gap-1 card-hover"
     >
-      <span className="text-sm text-zinc-500 dark:text-zinc-400">{label}</span>
+      <span className="text-sm text-muted">{label}</span>
       <span className="text-3xl font-bold">{value}</span>
     </Link>
   );
@@ -37,9 +37,9 @@ export default async function HostDashboardPage() {
         <StatCard label="対応中の貸出" value={activeRentalCount} href="/host/rentals" />
       </div>
 
-      <div className="rounded-xl border border-black/10 bg-white p-5 text-sm dark:border-white/10 dark:bg-zinc-900">
+      <div className="card text-sm">
         <h2 className="mb-2 font-semibold">はじめに</h2>
-        <ol className="list-inside list-decimal space-y-1 text-zinc-600 dark:text-zinc-400">
+        <ol className="list-inside list-decimal space-y-1 text-muted">
           <li>
             <Link href="/host/manual" className="underline">
               貸出マニュアル
@@ -51,6 +51,12 @@ export default async function HostDashboardPage() {
               車両
             </Link>
             を登録し、各車のQRコードを発行してステッカーとして車内に貼る
+          </li>
+          <li>
+            <Link href="/host/customers" className="underline">
+              利用客
+            </Link>
+            のメールアドレスを事前登録する（お客様はこのメールアドレスでログインします）
           </li>
           <li>
             <Link href="/host/settings" className="underline">
