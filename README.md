@@ -1,3 +1,18 @@
+# レンタカー多言語サポート (Rental Car Multilingual Support)
+
+レンタカー業者向け外国人対応AIプロトタイプ。Claude APIを使って以下を多言語（日本語・英語・中文・한국어）で提供します。
+
+- **マニュアルAI解説** — 貸出マニュアルのテキストを貼り付けると、AIが要点を整理して選択言語で説明
+- **車種別 運転席ガイド** — 車種ごとの運転席まわりの操作を多言語で説明
+- **事故時のAIサポート** — 事故発生時にAIがチャット形式で対応手順を案内
+- **給油・充電ガイド**（サブ機能） — 車種の燃料タイプに応じた給油・充電方法を説明
+
+## セットアップ
+
+1. 依存関係をインストール: `npm install`
+2. `.env.local.example` を `.env.local` にコピーし、`ANTHROPIC_API_KEY` に自分のAnthropic APIキーを設定
+3. `npm run dev` で開発サーバーを起動
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
