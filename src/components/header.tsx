@@ -23,6 +23,9 @@ export function Header() {
           <Link href="/accident" className="hover:underline">
             {t("navAccident")}
           </Link>
+          <Link href="/host/login" className="hover:underline">
+            {t("navHostLogin")}
+          </Link>
           <select
             value={lang}
             onChange={(e) => setLang(e.target.value as LangCode)}

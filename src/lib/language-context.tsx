@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useMemo, useSyncExternalStore } from "react";
 import { isLangCode, t as translate, type LangCode } from "./i18n";
 
 type LanguageContextValue = {
@@ -12,24 +12,39 @@ type LanguageContextValue = {
 const LanguageContext = createContext<LanguageContextValue | null>(null);
 
 const STORAGE_KEY = "rentacar-lang";
+const DEFAULT_LANG: LangCode = "ja";
+
+type Listener = () => void;
+const listeners = new Set<Listener>();
+
+function getSnapshot(): LangCode {
+  const stored = window.localStorage.getItem(STORAGE_KEY);
+  return stored && isLangCode(stored) ? stored : DEFAULT_LANG;
+}
+
+function getServerSnapshot(): LangCode {
+  return DEFAULT_LANG;
+}
+
+function subscribe(listener: Listener): () => void {
+  listeners.add(listener);
+  return () => listeners.delete(listener);
+}
+
+function setStoredLang(lang: LangCode): void {
+  window.localStorage.setItem(STORAGE_KEY, lang);
+  listeners.forEach((listener) => listener());
+}
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [lang, setLangState] = useState<LangCode>("ja");
-
-  useEffect(() => {
-    const stored = window.localStorage.getItem(STORAGE_KEY);
-    if (stored && isLangCode(stored)) {
-      setLangState(stored);
-    }
-  }, []);
-
-  const setLang = (next: LangCode) => {
-    setLangState(next);
-    window.localStorage.setItem(STORAGE_KEY, next);
-  };
+  const lang = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   const value = useMemo<LanguageContextValue>(
-    () => ({ lang, setLang, t: (key: string) => translate(lang, key) }),
+    () => ({
+      lang,
+      setLang: setStoredLang,
+      t: (key: string) => translate(lang, key),
+    }),
     [lang],
   );
 

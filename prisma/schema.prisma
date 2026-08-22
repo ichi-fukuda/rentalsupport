@@ -1,0 +1,92 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+/// レンタカー店舗（ホスト）アカウント
+model Host {
+  id                  String   @id @default(cuid())
+  email               String   @unique
+  passwordHash        String
+  shopName            String
+  contractedVehicles  Int      @default(1)
+  /// カンマ区切りのオプションID（例: "accident_ai,multilingual_manual"）
+  options             String   @default("")
+  storeToken          String   @unique @default(cuid())
+  /// 貸出時に見せる同意書テキスト（日本語、AIが多言語に翻訳）
+  agreementText       String   @default("")
+  requireLicensePhoto Boolean  @default(true)
+  requireDamagePhotos Boolean  @default(true)
+  /// 事故対応AIに追加で伝える店舗独自の注意事項
+  accidentNotes       String   @default("")
+  /// 貸出マニュアル本文（日本語）
+  manualText          String   @default("")
+  createdAt           DateTime @default(now())
+
+  vehicles        Vehicle[]
+  rentalSessions  RentalSession[]
+  accidentReports AccidentReport[]
+}
+
+/// ホストが保有する車両
+model Vehicle {
+  id           String   @id @default(cuid())
+  hostId       String
+  name         String
+  category     String
+  year         Int
+  /// "gasoline" | "hybrid" | "ev"
+  fuelType     String
+  controlsJa   String
+  fuelGuideJa  String
+  qrToken      String   @unique @default(cuid())
+  createdAt    DateTime @default(now())
+
+  host            Host             @relation(fields: [hostId], references: [id], onDelete: Cascade)
+  rentalSessions  RentalSession[]
+  accidentReports AccidentReport[]
+}
+
+/// 1回の貸出（客が店頭QRを読んでから返却完了まで）
+model RentalSession {
+  id                String    @id @default(cuid())
+  hostId            String
+  vehicleId         String
+  /// STARTED -> AGREED -> LICENSE_SUBMITTED -> DAMAGE_CHECKED -> READY_FOR_KEY -> IN_PROGRESS -> RETURN_SUBMITTED -> COMPLETED
+  status            String    @default("STARTED")
+  lang              String    @default("ja")
+  licensePhotoPath  String?
+  damagePhotoPaths  String    @default("")
+  returnPhotoPaths  String    @default("")
+  fuelConfirmed     Boolean   @default(false)
+  createdAt         DateTime  @default(now())
+  completedAt       DateTime?
+
+  host            Host             @relation(fields: [hostId], references: [id], onDelete: Cascade)
+  vehicle         Vehicle          @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
+  accidentReports AccidentReport[]
+}
+
+/// AIがヒアリングした事故対応の構造化レポート
+model AccidentReport {
+  id              String   @id @default(cuid())
+  hostId          String
+  vehicleId       String
+  rentalSessionId String?
+  lang            String   @default("ja")
+  /// チャットのやり取り（JSON文字列）
+  transcript      String
+  /// AIが生成した構造化レポート（保険会社に伝える想定の要約）
+  summary         String
+  /// NEW | ACKNOWLEDGED
+  status          String   @default("NEW")
+  createdAt       DateTime @default(now())
+
+  host          Host           @relation(fields: [hostId], references: [id], onDelete: Cascade)
+  vehicle       Vehicle        @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
+  rentalSession RentalSession? @relation(fields: [rentalSessionId], references: [id], onDelete: SetNull)
+}
